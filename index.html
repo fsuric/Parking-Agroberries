@@ -8,373 +8,138 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --purple: #792482;
-    --purple-d: #5a1a62;
-    --purple-l: #8C5193;
-    --accent: #C5168D;
-    --purple-pale: #e8d5ee;
-    --purple-ghost: #f8f2fa;
-    --farming: #1D9E75;
-    --farming-d: #0F6E56;
-    --farming-pale: #d4f0e7;
-    --text: #2c2c2a;
-    --text-muted: #5f5e5a;
-    --border: #d3d1c7;
-    --white: #ffffff;
+    --purple: #792482; --purple-d: #5a1a62; --purple-l: #8C5193;
+    --accent: #C5168D; --purple-pale: #e8d5ee; --purple-ghost: #f8f2fa;
+    --farming: #1D9E75; --farming-d: #0F6E56; --farming-pale: #d4f0e7;
+    --text: #2c2c2a; --text-muted: #5f5e5a; --border: #d3d1c7; --white: #fff;
+    --amber: #EF9F27; --amber-pale: #FAEEDA; --amber-d: #633806;
+    --red: #A32D2D;
   }
-  body {
-    font-family: 'Figtree', sans-serif;
-    background: var(--purple-ghost);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 0;
-  }
+  body { font-family: 'Figtree', sans-serif; background: var(--purple-ghost); color: var(--text); min-height: 100vh; }
   header {
-    background: var(--white);
-    border-bottom: 2px solid var(--purple);
-    padding: 14px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky; top: 0; z-index: 50;
-    box-shadow: 0 2px 8px rgba(121,36,130,0.08);
+    background: var(--white); border-bottom: 2px solid var(--purple);
+    padding: 14px 28px; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 8px rgba(121,36,130,0.08);
   }
-  header .title-block h1 {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--purple-d);
-    line-height: 1.2;
-  }
-  header .title-block p {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 2px;
-  }
-  header img {
-    height: 38px;
-    width: auto;
-  }
-  .container {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 24px 20px 48px;
-  }
+  header .title-block h1 { font-family: 'IBM Plex Sans', sans-serif; font-size: 20px; font-weight: 600; color: var(--purple-d); }
+  header .title-block p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  header img { height: 38px; width: auto; }
+  .container { max-width: 780px; margin: 0 auto; padding: 24px 20px 48px; }
   .legend {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-    background: var(--white);
-    padding: 10px 16px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
+    display: flex; gap: 16px; align-items: center; font-size: 13px; color: var(--text-muted);
+    margin-bottom: 20px; background: var(--white); padding: 10px 16px;
+    border-radius: 10px; border: 1px solid var(--border); flex-wrap: wrap;
   }
   .legend-item { display: flex; align-items: center; gap: 6px; }
-  .legend-dot {
-    width: 12px; height: 12px; border-radius: 50%;
-    flex-shrink: 0;
-  }
+  .legend-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
   .dot-free { background: var(--border); }
   .dot-reserved { background: var(--farming); }
   .dot-visit { background: var(--purple-l); }
-  .dot-pending { background: #EF9F27; }
-
-  /* Section */
+  .dot-pending { background: var(--amber); }
+  .status-bar { font-size: 12px; color: var(--text-muted); text-align: right; margin-bottom: 10px; height: 16px; }
+  .status-bar.loading { color: var(--purple); }
+  .status-bar.error { color: var(--red); }
   .section { margin-bottom: 28px; }
   .section-header {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--purple);
-    margin-bottom: 12px;
-    padding-left: 4px;
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple);
+    margin-bottom: 12px; padding-left: 4px;
   }
-
-  /* Tandem group */
   .tandem-group {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 10px;
+    background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px; margin-bottom: 10px;
   }
-  .tandem-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 10px;
-  }
-  .tandem-pair {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  /* Singles grid */
-  .singles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 10px;
-  }
-
-  /* Spot card */
+  .tandem-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .tandem-pair { display: flex; flex-direction: column; gap: 0; }
+  .tandem-connector { display: flex; align-items: center; gap: 8px; font-size: 10px; color: #b4b2a9; margin: 4px 2px; }
+  .tandem-line { flex: 1; height: 1px; background: var(--border); }
+  .singles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
   .spot {
-    background: var(--purple-ghost);
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 10px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    min-height: 78px;
-    justify-content: center;
+    background: var(--purple-ghost); border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 12px 10px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    min-height: 78px; justify-content: center;
     transition: border-color 0.15s, background 0.15s, transform 0.1s;
-    position: relative;
   }
   .spot:hover { border-color: var(--purple); transform: translateY(-1px); }
   .spot:active { transform: scale(0.98); }
-  .spot.state-free { background: var(--purple-ghost); }
-  .spot.state-reserved {
-    background: var(--farming-pale);
-    border-color: var(--farming);
-  }
-  .spot.state-visit {
-    background: var(--purple-pale);
-    border-color: var(--purple-l);
-  }
-  .spot.state-pending {
-    background: #FAEEDA;
-    border-color: #EF9F27;
-  }
-  .spot-name {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-align: center;
-  }
-  .spot-icon {
-    font-size: 22px;
-    color: var(--border);
-  }
-
-  /* Initials badge */
+  .spot.state-reserved { background: var(--farming-pale); border-color: var(--farming); }
+  .spot.state-visit { background: var(--purple-pale); border-color: var(--purple-l); }
+  .spot.state-default { background: var(--purple-pale); border-color: var(--purple); }
+  .spot.state-pending { background: var(--amber-pale); border-color: var(--amber); }
+  .spot-name { font-size: 11px; font-weight: 600; color: var(--text-muted); text-align: center; }
+  .spot-icon { font-size: 22px; color: var(--border); }
   .initials-wrap { position: relative; display: inline-block; }
-  .initials {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--farming-d);
-    cursor: default;
-  }
-  .state-visit .initials { color: var(--purple-d); }
-  .state-pending .initials { color: #633806; }
+  .initials { font-family: 'IBM Plex Sans', sans-serif; font-size: 17px; font-weight: 600; color: var(--farming-d); cursor: default; }
+  .state-visit .initials, .state-default .initials { color: var(--purple-d); }
+  .state-pending .initials { color: var(--amber-d); }
   .tooltip {
-    display: none;
-    position: absolute;
-    bottom: calc(100% + 7px);
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--purple-d);
-    color: var(--white);
-    font-size: 12px;
-    padding: 5px 10px;
-    border-radius: 6px;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 200;
+    display: none; position: absolute; bottom: calc(100% + 7px); left: 50%; transform: translateX(-50%);
+    background: var(--purple-d); color: #fff; font-size: 12px; padding: 5px 10px;
+    border-radius: 6px; white-space: nowrap; pointer-events: none; z-index: 200;
   }
   .tooltip::after {
-    content: '';
-    position: absolute;
-    top: 100%; left: 50%; transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top-color: var(--purple-d);
+    content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    border: 5px solid transparent; border-top-color: var(--purple-d);
   }
   .initials-wrap:hover .tooltip { display: block; }
-
-  /* Tandem connector line */
-  .tandem-connector {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    color: var(--text-muted);
-    gap: 8px;
-    margin: 0 2px;
+  .admin-bar {
+    background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
   }
-  .tandem-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
+  .admin-bar p { font-size: 13px; color: var(--text-muted); }
+  .pending-badge {
+    display: inline-block; background: var(--amber-pale); color: var(--amber-d);
+    border: 1px solid var(--amber); border-radius: 20px; font-size: 12px; font-weight: 700; padding: 2px 10px; margin-left: 6px;
   }
-
-  /* Modals */
+  .request-item {
+    display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+    background: var(--amber-pale); border: 1px solid var(--amber); border-radius: 8px;
+    margin-bottom: 8px; font-size: 13px; flex-wrap: wrap;
+  }
+  .req-name { flex: 1; font-weight: 600; }
+  .req-spot { color: var(--text-muted); }
+  .request-actions { display: flex; gap: 6px; }
   .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(90, 26, 98, 0.35);
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+    display: none; position: fixed; inset: 0;
+    background: rgba(90,26,98,0.35); z-index: 100;
+    align-items: center; justify-content: center; padding: 20px;
   }
   .modal-overlay.open { display: flex; }
   .modal {
-    background: var(--white);
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    padding: 24px;
-    width: 100%;
-    max-width: 380px;
+    background: var(--white); border-radius: 14px; border: 1px solid var(--border);
+    padding: 24px; width: 100%; max-width: 380px;
     box-shadow: 0 8px 32px rgba(90,26,98,0.18);
   }
-  .modal-icon {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: var(--purple-pale);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    margin-bottom: 14px;
-  }
-  .modal h2 {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--purple-d);
-    margin-bottom: 4px;
-  }
-  .modal p.sub {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 16px;
-  }
-  .modal label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+  .modal-icon { font-size: 28px; margin-bottom: 12px; }
+  .modal h2 { font-family: 'IBM Plex Sans', sans-serif; font-size: 17px; font-weight: 600; color: var(--purple-d); margin-bottom: 4px; }
+  .modal p.sub { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
+  .modal label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
   .modal input[type=text] {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    font-family: 'Figtree', sans-serif;
-    font-size: 15px;
-    color: var(--text);
-    background: var(--white);
-    outline: none;
-    margin-bottom: 20px;
-    transition: border-color 0.15s;
+    width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    font-family: 'Figtree', sans-serif; font-size: 15px; color: var(--text);
+    outline: none; margin-bottom: 20px; transition: border-color 0.15s;
   }
   .modal input[type=text]:focus { border-color: var(--purple); }
-  .modal-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+  .modal-info {
+    background: var(--purple-pale); border: 1px solid var(--purple-l); border-radius: 8px;
+    padding: 10px 14px; font-size: 13px; color: var(--purple-d); margin-bottom: 20px; line-height: 1.5;
   }
   .btn {
-    padding: 9px 18px;
-    border-radius: 8px;
-    font-family: 'Figtree', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    border: 1.5px solid var(--border);
-    background: var(--white);
-    color: var(--text);
-    transition: background 0.12s, border-color 0.12s;
+    padding: 9px 18px; border-radius: 8px; font-family: 'Figtree', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer; border: 1.5px solid var(--border);
+    background: var(--white); color: var(--text); transition: background 0.12s;
   }
   .btn:hover { background: var(--purple-ghost); }
-  .btn-primary {
-    background: var(--purple);
-    border-color: var(--purple);
-    color: var(--white);
-  }
+  .btn-primary { background: var(--purple); border-color: var(--purple); color: #fff; }
   .btn-primary:hover { background: var(--purple-d); border-color: var(--purple-d); }
-  .btn-danger {
-    background: #A32D2D;
-    border-color: #A32D2D;
-    color: var(--white);
-  }
-  .btn-danger:hover { background: #791F1F; border-color: #791F1F; }
-  .btn-warn {
-    background: #BA7517;
-    border-color: #BA7517;
-    color: var(--white);
-  }
-  .btn-warn:hover { background: #854F0B; border-color: #854F0B; }
-
-  /* Warning box in modal */
-  .modal-info {
-    background: var(--purple-pale);
-    border: 1px solid var(--purple-l);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 13px;
-    color: var(--purple-d);
-    margin-bottom: 20px;
-    line-height: 1.5;
-  }
-
-  /* Admin panel */
-  .admin-bar {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 18px;
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .admin-bar p { font-size: 13px; color: var(--text-muted); }
-  .admin-bar strong { color: var(--purple-d); font-weight: 600; }
-  .pending-badge {
-    display: inline-block;
-    background: #FAEEDA;
-    color: #633806;
-    border: 1px solid #EF9F27;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 2px 10px;
-    margin-left: 6px;
-  }
-  .admin-requests { width: 100%; margin-top: 12px; }
-  .request-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 14px;
-    background: #FAEEDA;
-    border: 1px solid #EF9F27;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    font-size: 13px;
-    flex-wrap: wrap;
-  }
-  .request-item .req-name { flex: 1; font-weight: 600; color: var(--text); }
-  .request-item .req-spot { color: var(--text-muted); }
-  .request-actions { display: flex; gap: 6px; }
-  .btn-sm {
-    padding: 5px 12px;
-    font-size: 12px;
-    border-radius: 6px;
-  }
-
+  .btn-danger { background: var(--red); border-color: var(--red); color: #fff; }
+  .btn-danger:hover { background: #791F1F; }
+  .btn-warn { background: #BA7517; border-color: #BA7517; color: #fff; }
+  .btn-warn:hover { background: #854F0B; }
+  .btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 6px; }
   @media (max-width: 500px) {
     .singles-grid { grid-template-columns: repeat(3, 1fr); }
     header { padding: 12px 16px; }
@@ -394,38 +159,30 @@
 </header>
 
 <div class="container">
-
-  <!-- Admin bar -->
-  <div class="admin-bar" id="adminBar">
+  <div class="admin-bar" id="adminBar" style="display:none">
     <div>
-      <p>Vista <strong>Administrador</strong> — puedes aprobar solicitudes para estacionamientos de visita.</p>
-      <p style="margin-top:4px;font-size:12px;color:#888;">
-        Solicitudes pendientes: <span id="pendingCount" class="pending-badge">0</span>
-      </p>
+      <p style="font-weight:600;color:var(--purple-d)">Panel administrador</p>
+      <p>Solicitudes pendientes: <span id="pendingCount" class="pending-badge">0</span></p>
     </div>
-    <button class="btn btn-primary" id="toggleAdmin" onclick="toggleAdminView()">Ver solicitudes</button>
+    <button class="btn btn-primary" id="toggleAdminBtn" onclick="toggleAdmin()">Ver solicitudes</button>
   </div>
-  <div id="adminRequests" style="display:none;margin-bottom:20px;"></div>
-
-  <!-- Legend -->
+  <div id="adminRequests" style="display:none;margin-bottom:16px;"></div>
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot dot-free"></div> Libre</div>
-    <div class="legend-item"><div class="legend-dot dot-reserved"></div> Reservado</div>
-    <div class="legend-item"><div class="legend-dot dot-visit"></div> Visita</div>
-    <div class="legend-item"><div class="legend-dot dot-pending"></div> Solicitud pendiente</div>
+    <div class="legend-item"><div class="legend-dot dot-free"></div>Libre</div>
+    <div class="legend-item"><div class="legend-dot dot-reserved"></div>Reservado</div>
+    <div class="legend-item"><div class="legend-dot dot-visit"></div>Visita / Fijo</div>
+    <div class="legend-item"><div class="legend-dot dot-pending"></div>Solicitud pendiente</div>
   </div>
-
-  <!-- Grid -->
+  <div class="status-bar loading" id="statusBar">Cargando...</div>
   <div id="parkingGrid"></div>
-
 </div>
 
-<!-- Modal: Reservar normal -->
+<!-- Modal: Reservar -->
 <div class="modal-overlay" id="modalReserve">
   <div class="modal">
     <div class="modal-icon">🅿</div>
-    <h2 id="reserveTitle">Reservar estacionamiento</h2>
-    <p class="sub" id="reserveSub">Ingresa tu nombre completo para reservar.</p>
+    <h2 id="reserveTitle">Reservar</h2>
+    <p class="sub">Ingresa tu nombre completo para reservar este espacio.</p>
     <label for="reserveName">Tu nombre</label>
     <input type="text" id="reserveName" placeholder="Nombre completo" maxlength="60" autocomplete="off" />
     <div class="modal-actions">
@@ -439,7 +196,7 @@
 <div class="modal-overlay" id="modalRelease">
   <div class="modal">
     <div class="modal-icon">🔓</div>
-    <h2 id="releaseTitle">Liberar estacionamiento</h2>
+    <h2 id="releaseTitle">Liberar</h2>
     <p class="sub" id="releaseSub"></p>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('modalRelease')">Cancelar</button>
@@ -452,11 +209,9 @@
 <div class="modal-overlay" id="modalVisit">
   <div class="modal">
     <div class="modal-icon">📋</div>
-    <h2 id="visitTitle">Solicitar estacionamiento de visita</h2>
-    <p class="sub">Este estacionamiento está reservado para visitas. Tu solicitud será enviada al administrador para aprobación.</p>
-    <div class="modal-info">
-      ℹ️ Un administrador revisará tu solicitud y podrá aprobarla o rechazarla.
-    </div>
+    <h2 id="visitTitle">Solicitar estacionamiento</h2>
+    <p class="sub">Este estacionamiento está reservado para visitas. Tu solicitud será enviada al administrador.</p>
+    <div class="modal-info">ℹ️ Un administrador revisará tu solicitud para aprobarla o rechazarla.</div>
     <label for="visitName">Tu nombre</label>
     <input type="text" id="visitName" placeholder="Nombre completo" maxlength="60" autocomplete="off" />
     <div class="modal-actions">
@@ -466,7 +221,7 @@
   </div>
 </div>
 
-<!-- Modal: Admin aprobó/rechazó -->
+<!-- Modal: Confirmación -->
 <div class="modal-overlay" id="modalConfirm">
   <div class="modal">
     <div class="modal-icon" id="confirmIcon">✅</div>
@@ -479,294 +234,262 @@
 </div>
 
 <script>
+const SUPABASE_URL = 'https://jesallwaipassvabilfi.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_luWf4aiUnZYYxbGMkLzSJg_IuP1hrBF';
 const TANDEM = [
-  { id: '4023', spots: ['4023 - A', '4023 - B'] },
-  { id: '4024', spots: ['4024 - A', '4024 - B'] },
-  { id: '4030', spots: ['4030 - A', '4030 - B'] },
+  { id:'4023', spots:['4023 - A','4023 - B'] },
+  { id:'4024', spots:['4024 - A','4024 - B'] },
+  { id:'4030', spots:['4030 - A','4030 - B'] },
 ];
 const SINGLES = ['6002','6003','6017','6018','6020','7040','7041'];
-const VISIT_SPOTS = ['6002','6003'];
-const STORAGE_KEY = 'agb_parking_v2';
+const VISIT_SPOTS = new Set(['6002','6003']);
+const DEFAULT_SPOTS = new Set(['6018']);
+const POLL_INTERVAL = 8000;
 
-function loadData() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const data = raw ? JSON.parse(raw) : {};
-    if (!data.reservations) data.reservations = {};
-    if (!data.requests) data.requests = [];
-    // Defaults
-    if (!data.reservations['6002']) data.reservations['6002'] = { name: 'Visita', type: 'visit' };
-    if (!data.reservations['6003']) data.reservations['6003'] = { name: 'Visita', type: 'visit' };
-    if (!data.reservations['6018']) data.reservations['6018'] = { name: 'Francisco Suric', type: 'reserved' };
-    return data;
-  } catch(e) {
-    return { reservations: { '6002': {name:'Visita',type:'visit'}, '6003': {name:'Visita',type:'visit'}, '6018': {name:'Francisco Suric',type:'reserved'} }, requests: [] };
-  }
-}
-function saveData(data) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
-}
-
-let state = loadData();
 let activeSpot = null;
 let adminVisible = false;
+let reservations = {};
+let requests = [];
+
+const hdrs = () => ({
+  'Content-Type': 'application/json',
+  'apikey': SUPABASE_KEY,
+  'Authorization': 'Bearer ' + SUPABASE_KEY,
+  'Prefer': 'return=representation'
+});
+
+async function sbGet(table, params='') {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, { headers: hdrs() });
+  if (!r.ok) throw new Error(`${r.status} ${await r.text()}`);
+  return r.json();
+}
+async function sbUpsert(table, body) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: { ...hdrs(), 'Prefer': 'resolution=merge-duplicates,return=representation' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error(`${r.status} ${await r.text()}`);
+  return r.json();
+}
+async function sbDelete(table, match) {
+  const params = Object.entries(match).map(([k,v])=>`${k}=eq.${encodeURIComponent(v)}`).join('&');
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, { method: 'DELETE', headers: hdrs() });
+  if (!r.ok) throw new Error(`${r.status} ${await r.text()}`);
+}
+async function sbPatch(table, match, body) {
+  const params = Object.entries(match).map(([k,v])=>`${k}=eq.${encodeURIComponent(v)}`).join('&');
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, {
+    method: 'PATCH', headers: hdrs(), body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error(`${r.status} ${await r.text()}`);
+  return r.json();
+}
+
+async function loadAll() {
+  setStatus('Actualizando...', 'loading');
+  const [res, reqs] = await Promise.all([
+    sbGet('reservations', 'select=*'),
+    sbGet('requests', 'select=*&status=eq.pending&order=created_at.asc')
+  ]);
+  reservations = {};
+  res.forEach(r => reservations[r.spot_id] = r);
+  requests = reqs;
+  setStatus(`Actualizado ${new Date().toLocaleTimeString('es-CL')}`, '');
+}
 
 function getInitials(name) {
-  return name.trim().split(/\s+/).map(w => w[0].toUpperCase()).slice(0,2).join('');
+  return name.trim().split(/\s+/).map(w=>w[0].toUpperCase()).slice(0,2).join('');
 }
-
-function getSpotState(spotId) {
-  const res = state.reservations[spotId];
-  const pending = state.requests.find(r => r.spot === spotId && r.status === 'pending');
-  if (pending) return { type: 'pending', name: pending.name };
-  if (res) return res;
-  return null;
+function spotStateClass(spotId) {
+  const pending = requests.find(r => r.spot_id === spotId);
+  if (pending) return 'state-pending';
+  const res = reservations[spotId];
+  if (!res) return 'state-free';
+  if (res.reservation_type === 'visit') return 'state-visit';
+  if (res.reservation_type === 'default') return 'state-default';
+  return 'state-reserved';
 }
+function makeInitials(text, tooltip) {
+  const wrap = el('div','initials-wrap');
+  const init = el('div','initials'); init.textContent = text;
+  const tip = el('div','tooltip'); tip.textContent = tooltip;
+  wrap.appendChild(init); wrap.appendChild(tip);
+  return wrap;
+}
+function el(tag, cls) { const e = document.createElement(tag); if(cls) e.className=cls; return e; }
+function sectionHeader(text) { const h = el('div','section-header'); h.textContent=text; return h; }
+function setStatus(msg, cls) { const b = document.getElementById('statusBar'); b.textContent=msg; b.className='status-bar '+cls; }
 
 function renderSpot(spotId) {
-  const info = getSpotState(spotId);
-  let stateClass = 'state-free';
-  if (info) {
-    if (info.type === 'visit') stateClass = 'state-visit';
-    else if (info.type === 'pending') stateClass = 'state-pending';
-    else stateClass = 'state-reserved';
-  }
-  const div = document.createElement('div');
-  div.className = `spot ${stateClass}`;
+  const stateClass = spotStateClass(spotId);
+  const pending = requests.find(r => r.spot_id === spotId);
+  const res = reservations[spotId];
+  const div = el('div', `spot ${stateClass}`);
   div.dataset.spot = spotId;
-  div.setAttribute('title', '');
-
-  const nameEl = document.createElement('div');
-  nameEl.className = 'spot-name';
-  nameEl.textContent = spotId;
+  const nameEl = el('div','spot-name'); nameEl.textContent = spotId;
   div.appendChild(nameEl);
-
-  if (info) {
-    const wrap = document.createElement('div');
-    wrap.className = 'initials-wrap';
-    const init = document.createElement('div');
-    init.className = 'initials';
-    init.textContent = info.type === 'pending' ? '?' : getInitials(info.name);
-    const tip = document.createElement('div');
-    tip.className = 'tooltip';
-    tip.textContent = info.type === 'pending' ? `Solicitud: ${info.name}` : info.name;
-    wrap.appendChild(init);
-    wrap.appendChild(tip);
-    div.appendChild(wrap);
+  if (pending) {
+    div.appendChild(makeInitials('?', `Solicitud: ${pending.requested_by}`));
+  } else if (res) {
+    div.appendChild(makeInitials(getInitials(res.reserved_by), res.reserved_by));
   } else {
-    const icon = document.createElement('div');
-    icon.className = 'spot-icon';
-    icon.textContent = '🅿';
-    div.appendChild(icon);
+    const icon = el('div','spot-icon'); icon.textContent='🅿'; div.appendChild(icon);
   }
-
-  div.addEventListener('click', () => handleSpotClick(spotId));
+  div.addEventListener('click', () => handleClick(spotId));
   return div;
 }
 
 function renderGrid() {
   const grid = document.getElementById('parkingGrid');
   grid.innerHTML = '';
-
-  // Tandem section
-  const tandemSection = document.createElement('div');
-  tandemSection.className = 'section';
-  const tandemHeader = document.createElement('div');
-  tandemHeader.className = 'section-header';
-  tandemHeader.textContent = 'Estacionamientos tándem';
-  tandemSection.appendChild(tandemHeader);
-
+  const ts = el('div','section');
+  ts.appendChild(sectionHeader('Estacionamientos tándem'));
   TANDEM.forEach(pair => {
-    const group = document.createElement('div');
-    group.className = 'tandem-group';
-    const lbl = document.createElement('div');
-    lbl.className = 'tandem-label';
-    lbl.textContent = 'Tándem ' + pair.id;
-    group.appendChild(lbl);
-    const pairDiv = document.createElement('div');
-    pairDiv.className = 'tandem-pair';
+    const grp = el('div','tandem-group');
+    const lbl = el('div','tandem-label'); lbl.textContent = 'Tándem ' + pair.id;
+    grp.appendChild(lbl);
+    const pairDiv = el('div','tandem-pair');
     pair.spots.forEach((spotId, i) => {
       pairDiv.appendChild(renderSpot(spotId));
       if (i === 0) {
-        const connector = document.createElement('div');
-        connector.className = 'tandem-connector';
-        connector.innerHTML = '<div class="tandem-line"></div><span style="font-size:10px;color:#b4b2a9;white-space:nowrap;">↕ tándem</span><div class="tandem-line"></div>';
-        pairDiv.appendChild(connector);
+        const conn = el('div','tandem-connector');
+        conn.innerHTML = '<div class="tandem-line"></div><span>↕ tándem</span><div class="tandem-line"></div>';
+        pairDiv.appendChild(conn);
       }
     });
-    group.appendChild(pairDiv);
-    tandemSection.appendChild(group);
+    grp.appendChild(pairDiv); ts.appendChild(grp);
   });
-  grid.appendChild(tandemSection);
-
-  // Singles section
-  const singleSection = document.createElement('div');
-  singleSection.className = 'section';
-  const singleHeader = document.createElement('div');
-  singleHeader.className = 'section-header';
-  singleHeader.textContent = 'Estacionamientos individuales';
-  singleSection.appendChild(singleHeader);
-  const singlesGrid = document.createElement('div');
-  singlesGrid.className = 'singles-grid';
-  SINGLES.forEach(s => singlesGrid.appendChild(renderSpot(s)));
-  singleSection.appendChild(singlesGrid);
-  grid.appendChild(singleSection);
-
-  // Update pending count
-  const pending = state.requests.filter(r => r.status === 'pending').length;
+  grid.appendChild(ts);
+  const ss = el('div','section');
+  ss.appendChild(sectionHeader('Estacionamientos individuales'));
+  const sg = el('div','singles-grid');
+  SINGLES.forEach(s => sg.appendChild(renderSpot(s)));
+  ss.appendChild(sg); grid.appendChild(ss);
+  const pending = requests.length;
   document.getElementById('pendingCount').textContent = pending;
   document.getElementById('adminBar').style.display = '';
+  if (adminVisible) renderAdminRequests();
 }
 
-function handleSpotClick(spotId) {
+function handleClick(spotId) {
   activeSpot = spotId;
-  const info = getSpotState(spotId);
-  const isVisit = VISIT_SPOTS.includes(spotId);
-
-  if (!info) {
+  const pending = requests.find(r => r.spot_id === spotId);
+  if (pending) { alert(`Solicitud pendiente de: ${pending.requested_by}\nUsa el panel administrador para aprobar o rechazar.`); return; }
+  const res = reservations[spotId];
+  const isVisit = VISIT_SPOTS.has(spotId);
+  if (!res) {
     if (isVisit) {
-      // Open visit request modal
       document.getElementById('visitTitle').textContent = 'Solicitar ' + spotId;
       document.getElementById('visitName').value = '';
       openModal('modalVisit');
-      setTimeout(() => document.getElementById('visitName').focus(), 80);
+      setTimeout(()=>document.getElementById('visitName').focus(),80);
     } else {
       document.getElementById('reserveTitle').textContent = 'Reservar ' + spotId;
-      document.getElementById('reserveSub').textContent = 'Ingresa tu nombre completo para reservar este espacio.';
       document.getElementById('reserveName').value = '';
       openModal('modalReserve');
-      setTimeout(() => document.getElementById('reserveName').focus(), 80);
+      setTimeout(()=>document.getElementById('reserveName').focus(),80);
     }
-  } else if (info.type === 'pending') {
-    // Just show info (admin can handle from admin panel)
-    alert(`Solicitud pendiente de aprobación\nSolicitante: ${info.name}\nUsa el panel de administrador para aprobar o rechazar.`);
-  } else if (info.type === 'visit') {
-    // Can't free visit spots directly (admin only), but can request
+  } else if (isVisit || DEFAULT_SPOTS.has(spotId)) {
     document.getElementById('visitTitle').textContent = 'Solicitar ' + spotId;
     document.getElementById('visitName').value = '';
     openModal('modalVisit');
-    setTimeout(() => document.getElementById('visitName').focus(), 80);
+    setTimeout(()=>document.getElementById('visitName').focus(),80);
   } else {
-    // Release
     document.getElementById('releaseTitle').textContent = 'Liberar ' + spotId;
-    document.getElementById('releaseSub').textContent = `Reservado por: ${info.name}`;
+    document.getElementById('releaseSub').textContent = `Reservado por: ${res.reserved_by}`;
     openModal('modalRelease');
   }
 }
 
-function confirmReserve() {
+async function confirmReserve() {
   const name = document.getElementById('reserveName').value.trim();
   if (!name) { document.getElementById('reserveName').focus(); return; }
-  state.reservations[activeSpot] = { name, type: 'reserved' };
-  saveData(state);
   closeModal('modalReserve');
-  renderGrid();
+  try {
+    await sbUpsert('reservations', { spot_id: activeSpot, reserved_by: name, reservation_type: 'reserved', updated_at: new Date().toISOString() });
+    await refresh();
+  } catch(e) { showConfirm('❌','Error al reservar', e.message); }
 }
-
-function confirmRelease() {
-  // Don't allow releasing defaults
-  const isDefault6018 = activeSpot === '6018';
-  const isVisitDefault = VISIT_SPOTS.includes(activeSpot) && state.reservations[activeSpot]?.name === 'Visita';
-  if (isDefault6018 || isVisitDefault) {
-    // restore default
-    if (isVisitDefault) {
-      state.reservations[activeSpot] = { name: 'Visita', type: 'visit' };
-    } else {
-      state.reservations['6018'] = { name: 'Francisco Suric', type: 'reserved' };
-    }
-  } else {
-    delete state.reservations[activeSpot];
-  }
-  saveData(state);
+async function confirmRelease() {
   closeModal('modalRelease');
-  renderGrid();
+  try {
+    if (DEFAULT_SPOTS.has(activeSpot)) {
+      await sbUpsert('reservations', { spot_id: activeSpot, reserved_by: 'Francisco Suric', reservation_type: 'default', updated_at: new Date().toISOString() });
+    } else if (VISIT_SPOTS.has(activeSpot)) {
+      await sbUpsert('reservations', { spot_id: activeSpot, reserved_by: 'Visita', reservation_type: 'visit', updated_at: new Date().toISOString() });
+    } else {
+      await sbDelete('reservations', { spot_id: activeSpot });
+    }
+    await refresh();
+  } catch(e) { showConfirm('❌','Error al liberar', e.message); }
 }
-
-function submitVisitRequest() {
+async function submitVisitRequest() {
   const name = document.getElementById('visitName').value.trim();
   if (!name) { document.getElementById('visitName').focus(); return; }
-  state.requests.push({ spot: activeSpot, name, status: 'pending', ts: Date.now() });
-  saveData(state);
   closeModal('modalVisit');
-  renderGrid();
-  // Show confirmation
-  document.getElementById('confirmIcon').textContent = '📬';
-  document.getElementById('confirmTitle').textContent = 'Solicitud enviada';
-  document.getElementById('confirmSub').textContent = `Tu solicitud para ${activeSpot} fue registrada. Un administrador la revisará pronto.`;
-  openModal('modalConfirm');
+  try {
+    await sbUpsert('requests', { spot_id: activeSpot, requested_by: name, status: 'pending' });
+    await refresh();
+    showConfirm('📬','Solicitud enviada', `Tu solicitud para ${activeSpot} fue registrada. Un administrador la revisará pronto.`);
+  } catch(e) { showConfirm('❌','Error', e.message); }
 }
 
-function toggleAdminView() {
+function toggleAdmin() {
   adminVisible = !adminVisible;
   document.getElementById('adminRequests').style.display = adminVisible ? '' : 'none';
-  document.getElementById('toggleAdmin').textContent = adminVisible ? 'Ocultar solicitudes' : 'Ver solicitudes';
+  document.getElementById('toggleAdminBtn').textContent = adminVisible ? 'Ocultar solicitudes' : 'Ver solicitudes';
   if (adminVisible) renderAdminRequests();
 }
-
 function renderAdminRequests() {
   const container = document.getElementById('adminRequests');
-  const pending = state.requests.filter(r => r.status === 'pending');
-  if (pending.length === 0) {
-    container.innerHTML = '<p style="font-size:13px;color:#888;padding:8px 0;">No hay solicitudes pendientes.</p>';
-    return;
-  }
+  if (!requests.length) { container.innerHTML = '<p style="font-size:13px;color:#888;padding:6px 0">No hay solicitudes pendientes.</p>'; return; }
   container.innerHTML = '';
-  pending.forEach((req, idx) => {
-    const div = document.createElement('div');
-    div.className = 'request-item';
-    div.innerHTML = `
-      <div class="req-name">${req.name}</div>
-      <div class="req-spot">Solicita: <strong>${req.spot}</strong></div>
-      <div class="request-actions">
-        <button class="btn btn-primary btn-sm" onclick="approveRequest(${state.requests.indexOf(req)})">Aprobar</button>
-        <button class="btn btn-danger btn-sm" onclick="rejectRequest(${state.requests.indexOf(req)})">Rechazar</button>
-      </div>
-    `;
+  requests.forEach(req => {
+    const div = el('div','request-item');
+    div.innerHTML = `<div class="req-name">${req.requested_by}</div><div class="req-spot">Solicita: <strong>${req.spot_id}</strong></div><div class="request-actions"><button class="btn btn-primary btn-sm" onclick="approveRequest('${req.id}','${req.spot_id}','${req.requested_by}')">Aprobar</button><button class="btn btn-danger btn-sm" onclick="rejectRequest('${req.id}')">Rechazar</button></div>`;
     container.appendChild(div);
   });
 }
-
-function approveRequest(idx) {
-  const req = state.requests[idx];
-  req.status = 'approved';
-  // Reserve the spot
-  state.reservations[req.spot] = { name: req.name, type: 'reserved' };
-  saveData(state);
-  renderGrid();
-  renderAdminRequests();
-  document.getElementById('confirmIcon').textContent = '✅';
-  document.getElementById('confirmTitle').textContent = 'Solicitud aprobada';
-  document.getElementById('confirmSub').textContent = `${req.spot} asignado a ${req.name}.`;
-  openModal('modalConfirm');
+async function approveRequest(id, spotId, name) {
+  try {
+    await sbPatch('requests', {id}, { status: 'approved', reviewed_at: new Date().toISOString() });
+    await sbUpsert('reservations', { spot_id: spotId, reserved_by: name, reservation_type: 'reserved', updated_at: new Date().toISOString() });
+    await refresh();
+    showConfirm('✅','Aprobado', `${spotId} asignado a ${name}.`);
+  } catch(e) { showConfirm('❌','Error', e.message); }
 }
-
-function rejectRequest(idx) {
-  const req = state.requests[idx];
-  req.status = 'rejected';
-  saveData(state);
-  renderGrid();
-  renderAdminRequests();
-  document.getElementById('confirmIcon').textContent = '❌';
-  document.getElementById('confirmTitle').textContent = 'Solicitud rechazada';
-  document.getElementById('confirmSub').textContent = `La solicitud de ${req.name} para ${req.spot} fue rechazada.`;
-  openModal('modalConfirm');
+async function rejectRequest(id) {
+  try {
+    await sbPatch('requests', {id}, { status: 'rejected', reviewed_at: new Date().toISOString() });
+    await refresh();
+    showConfirm('❌','Rechazado', 'La solicitud fue rechazada.');
+  } catch(e) { showConfirm('❌','Error', e.message); }
 }
 
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function showConfirm(icon, title, sub) {
+  document.getElementById('confirmIcon').textContent = icon;
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmSub').textContent = sub;
+  openModal('modalConfirm');
+}
+document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if(e.target===o) o.classList.remove('open'); }));
+document.getElementById('reserveName').addEventListener('keydown', e => { if(e.key==='Enter') confirmReserve(); });
+document.getElementById('visitName').addEventListener('keydown', e => { if(e.key==='Enter') submitVisitRequest(); });
 
-// Enter key support
-document.getElementById('reserveName').addEventListener('keydown', e => { if (e.key==='Enter') confirmReserve(); });
-document.getElementById('visitName').addEventListener('keydown', e => { if (e.key==='Enter') submitVisitRequest(); });
+async function refresh() {
+  try {
+    await loadAll();
+    renderGrid();
+  } catch(e) {
+    setStatus('Error de conexión: ' + e.message, 'error');
+  }
+}
 
-// Close modal on overlay click
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
-});
-
-renderGrid();
+refresh();
+setInterval(refresh, POLL_INTERVAL);
 </script>
 </body>
 </html>
